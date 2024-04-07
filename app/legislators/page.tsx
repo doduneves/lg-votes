@@ -1,4 +1,5 @@
 import React from 'react'
+import { HomeLink } from '../components/HomeLink';
 
 export interface ILegislator {
     id: number,
@@ -19,7 +20,7 @@ const LegislatorsPage = async () => {
     return (
         <>
             <h1>Legislators</h1>
-            <table>
+            <table className='table table-sm table-zebra'>
                 <thead>
                     <tr>
                         <td>ID</td>
@@ -31,7 +32,7 @@ const LegislatorsPage = async () => {
                 <tbody>
                     {
                         legislators.map((l: ILegislator) =>
-                            <tr key={l.id}>
+                            <tr className='hover' key={l.id}>
                                 <td>{l.id}</td>
                                 <td>{l.name}</td>
                                 <td>{l.supported_bills}</td>
@@ -41,6 +42,7 @@ const LegislatorsPage = async () => {
                     }
                 </tbody>
             </table>
+            <HomeLink />
         </>
 
     )

@@ -1,5 +1,7 @@
 import React from 'react'
 import { ILegislator } from '../legislators/page';
+import Link from 'next/link';
+import { HomeLink } from '../components/HomeLink';
 
 interface IVotes {
     id: number,
@@ -26,8 +28,8 @@ const BillsPage = async () => {
 
     return (
         <>
-            <h1>Bills</h1>
-            <table>
+            <h1 className="text-5xl font-bold pb-4">Bills</h1>
+            <table className='table table-sm table-zebra'>
                 <thead>
                     <tr>
                         <td>ID</td>
@@ -40,7 +42,7 @@ const BillsPage = async () => {
                 <tbody>
                     {
                         bills.map((b: IBills) =>
-                            <tr key={b.id}>
+                            <tr className='hover' key={b.id}>
                                 <td>{b.id}</td>
                                 <td>{b.title}</td>
                                 <td>{b.votes.supporters.length}</td>
@@ -51,6 +53,7 @@ const BillsPage = async () => {
                     }
                 </tbody>
             </table>
+            <HomeLink />
         </>
 
     )
