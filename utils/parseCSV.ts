@@ -1,5 +1,6 @@
-import Papa from 'papaparse';
+import Papa, { ParseResult } from 'papaparse';
 import fs from 'fs';
+
 
 export const parseCSV = (filePath: string) => {
     const content = fs.readFileSync(filePath, "utf-8");
