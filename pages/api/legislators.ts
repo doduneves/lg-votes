@@ -1,7 +1,8 @@
+import type { NextApiRequest, NextApiResponse } from 'next'
+
 import { DataFiles } from "@/utils/enums";
 import { parseCSV } from "@/utils/parseCSV";
 
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { retrieveVoteResultsInfo } from "./results";
 
 export function retrieveLegislatorsInfo(fields: string[] = []) {
