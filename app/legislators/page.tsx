@@ -1,11 +1,12 @@
 import React from 'react'
 
-interface ILegislator {
+export interface ILegislator {
     id: number,
     name: string,
     supported_bills: number,
     opposed_bills: number,
 }
+
 const fetchLegislators = async () => {
     const res = await fetch('http://localhost:3000/api/legislators')
     const data = await res.json();
@@ -13,7 +14,7 @@ const fetchLegislators = async () => {
 }
 
 const LegislatorsPage = async () => {
-    const users = await fetchLegislators();
+    const legislators = await fetchLegislators();
 
     return (
         <>
@@ -29,7 +30,7 @@ const LegislatorsPage = async () => {
                 </thead>
                 <tbody>
                     {
-                        users.map((l: ILegislator) =>
+                        legislators.map((l: ILegislator) =>
                             <tr key={l.id}>
                                 <td>{l.id}</td>
                                 <td>{l.name}</td>

@@ -22,11 +22,9 @@ export function retrieveBillsInfo(fields: string[] = []) {
         }
 
         if (WITH_VOTES) {
-            const supporters = []
-            const opposers = []
 
-            supporters.push(voteResultsInfo.filter(r => r.vote?.bill_id == b.id && r.vote_type == '1'))
-            opposers.push(voteResultsInfo.filter(r => r.vote?.bill_id == b.id && r.vote_type == '2'))
+            const supporters = voteResultsInfo.filter(r => r.vote?.bill_id == b.id && r.vote_type == '1')
+            const opposers = voteResultsInfo.filter(r => r.vote?.bill_id == b.id && r.vote_type == '2')
 
             b.votes = { supporters, opposers }
         }
