@@ -6,11 +6,17 @@ import { retrieveLegislatorsInfo } from './legislators';
 import { retrieveVoteResultsInfo } from './results';
 import { IBill, ILegislator, IVoteResult } from '@/interfaces/interfaces';
 
-export function retrieveBillsInfo(fields: string[] = []): Array<IBill> {
+export function retrieveBillsInfo(
+    fields: string[] = [],
+    exclusiveIds: string[] = [],
+): Array<IBill> {
     const WITH_VOTES: boolean = fields.includes('votes');
     const WITH_SPONSOR: boolean = fields.includes('sponsor');
 
-    const billsData = parseCSV(DataFiles.BILLS) as Array<IBill>;
+    let billsData = parseCSV(DataFiles.BILLS) as Array<IBill>;
+    if (exclusiveIds.length) {
+        billsData = billsData.filter(b => exclusiveIds.includes(b.id.toString()));
+    }
 
     if (!WITH_VOTES && !WITH_SPONSOR) return billsData;
 

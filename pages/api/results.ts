@@ -3,6 +3,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { DataFiles } from "@/utils/enums";
 import { parseCSV } from "@/utils/parseCSV";
 import { IBill, ILegislator, IVote, IVoteResult } from '@/interfaces/interfaces';
+import { retrieveVotesInfo } from './votes';
+import { retrieveLegislatorsInfo } from './legislators';
 
 export function retrieveVoteResultsInfo(fields: string[] = []): Array<IVoteResult> {
     const WITH_LEGISLATORS: boolean = fields.includes('legislators');
@@ -12,28 +14,16 @@ export function retrieveVoteResultsInfo(fields: string[] = []): Array<IVoteResul
     const voteResultsData = parseCSV(DataFiles.RESULTS) as Array<IVoteResult>;
 
     let legislatorsData: Array<ILegislator> = [];
+    let votesData: Array<IVote> = [];
+
     if (WITH_LEGISLATORS) {
-        legislatorsData = parseCSV(DataFiles.LEGISLATORS) as Array<ILegislator>;
-        const legilatorsIds = voteResultsData.map(v => v.legislator_id);
-        legislatorsData = legislatorsData.filter(l => legilatorsIds.includes(l.id));
+        const legilatorsIds = voteResultsData.map(v => v.legislator_id?.toString());
+        legislatorsData = retrieveLegislatorsInfo([], legilatorsIds);
     }
 
-    let votesData: Array<IVote> = [];
-    let billsData: Array<IBill> = [];
-
     if (WITH_VOTES) {
-        votesData = parseCSV(DataFiles.VOTES) as Array<IVote>;
-        const votesIds = voteResultsData.map(v => v.vote_id);
-        votesData = votesData.filter(v => votesIds.includes(v.id));
-
-        if (WITH_BILLS) {
-            billsData = parseCSV(DataFiles.BILLS) as Array<IBill>;
-
-            votesData.forEach((vote) => {
-                vote.bill = billsData.find(b => b.id == vote.bill_id) as IBill;
-            })
-        }
-
+        const votesIds = voteResultsData.map(v => v.vote_id?.toString());
+        votesData = retrieveVotesInfo(WITH_BILLS ? ['bills'] : [''], votesIds);
     }
 
     if (!WITH_LEGISLATORS && !WITH_VOTES) return voteResultsData;

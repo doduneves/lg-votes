@@ -6,10 +6,17 @@ import { parseCSV } from "@/utils/parseCSV";
 import { retrieveVoteResultsInfo } from "./results";
 import { ILegislator, IVoteResult } from '@/interfaces/interfaces';
 
-export function retrieveLegislatorsInfo(fields: string[] = []): Array<ILegislator> {
+export function retrieveLegislatorsInfo(
+    fields: string[] = [],
+    exclusiveIds: string[] = []
+): Array<ILegislator> {
     const WITH_VOTES: boolean = fields.includes('votes');
 
-    const legislatorsData = parseCSV(DataFiles.LEGISLATORS) as Array<ILegislator>;
+    let legislatorsData = parseCSV(DataFiles.LEGISLATORS) as Array<ILegislator>;
+
+    if (exclusiveIds.length) {
+        legislatorsData = legislatorsData.filter(l => exclusiveIds.includes(l.id.toString()));
+    }
 
     if (!WITH_VOTES) return legislatorsData;
 
