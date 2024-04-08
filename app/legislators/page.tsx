@@ -1,12 +1,7 @@
 import React from 'react'
-import { HomeLink } from '../components/HomeLink';
 
-export interface ILegislator {
-    id: number,
-    name: string,
-    supported_bills: number,
-    opposed_bills: number,
-}
+import { HomeLink } from '../components/HomeLink';
+import { ILegislator } from '@/interfaces/interfaces';
 
 const fetchLegislators = async () => {
     const res = await fetch('http://localhost:3000/api/legislators')

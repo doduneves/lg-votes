@@ -1,21 +1,7 @@
 import React from 'react'
-import { ILegislator } from '../legislators/page';
-import Link from 'next/link';
+
 import { HomeLink } from '../components/HomeLink';
-
-interface IVotes {
-    id: number,
-    legislator_id: number,
-    vote_id: number,
-    vote_type: number,
-}
-
-interface IBills {
-    id: number,
-    title: string,
-    votes: Array<IVotes>,
-    sponsor: ILegislator,
-}
+import { IBill } from '@/interfaces/interfaces';
 
 const fetchBills = async () => {
     const res = await fetch('http://localhost:3000/api/bills')
@@ -41,13 +27,13 @@ const BillsPage = async () => {
                 </thead>
                 <tbody>
                     {
-                        bills.map((b: IBills) =>
+                        bills.map((b: IBill) =>
                             <tr className='hover' key={b.id}>
                                 <td>{b.id}</td>
                                 <td>{b.title}</td>
-                                <td>{b.votes.supporters.length}</td>
-                                <td>{b.votes.opposers.length}</td>
-                                <td>{b.sponsor.name}</td>
+                                <td>{b.votes?.supporters?.length}</td>
+                                <td>{b.votes?.opposers?.length}</td>
+                                <td>{b.sponsor?.name}</td>
                             </tr>
                         )
                     }

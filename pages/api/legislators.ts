@@ -4,30 +4,24 @@ import { DataFiles } from "@/utils/enums";
 import { parseCSV } from "@/utils/parseCSV";
 
 import { retrieveVoteResultsInfo } from "./results";
+import { ILegislator, IVoteResult } from '@/interfaces/interfaces';
 
-export function retrieveLegislatorsInfo(fields: string[] = []) {
+export function retrieveLegislatorsInfo(fields: string[] = []): Array<ILegislator> {
     const WITH_VOTES: boolean = fields.includes('votes');
 
-    const legislatorsData: any[] = parseCSV(DataFiles.LEGISLATORS);
+    const legislatorsData = parseCSV(DataFiles.LEGISLATORS) as Array<ILegislator>;
 
     if (!WITH_VOTES) return legislatorsData;
 
-    const deepResultsData = retrieveVoteResultsInfo(['votes', 'bills']);
-
-    const legistorsWithVotes: any[] = [];
+    const voteResultsData: Array<IVoteResult> = retrieveVoteResultsInfo(['votes', 'bills']);
 
     legislatorsData.forEach(l => {
-        const votes = deepResultsData.filter(res => res.legislator_id == l.id);
-
-        legistorsWithVotes.push({
-            ...l,
-            votes,
-            supported_bills: votes.filter(v => v.vote_type == '1').length,
-            opposed_bills: votes.filter(v => v.vote_type == '2').length,
-        })
+        l.votes = voteResultsData.filter(res => res.legislator_id == l.id);
+        l.supported_bills = l.votes.filter(v => v.vote_type == 1).length;
+        l.opposed_bills = l.votes.filter(v => v.vote_type == 2).length;
     })
 
-    return legistorsWithVotes;
+    return legislatorsData;
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
