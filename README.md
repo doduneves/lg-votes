@@ -7,7 +7,8 @@ An application of legislation votes, based on .CSV files.
 
 ## Pre-requisites
 
-Node Installed
+Node Installed. 
+
 To install:
 
 https://nodejs.org/en/download
