@@ -12,10 +12,15 @@ An application of legislation votes, based on .CSV files.
 ## Pre-requisites
 
   
-
 Node Installed
 
-  
+
+To install:
+
+https://nodejs.org/en/download
+
+### Run code
+
 
 ## Getting Started
 
@@ -39,13 +44,6 @@ And the, run the development server:
 
   
 
-To install:
-
-https://nodejs.org/en/download
-
-### Run code
-
-  
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 Besides the UI web application, you can access each csv API by requests:
