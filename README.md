@@ -3,46 +3,25 @@
 
 ## About
 
-  
-
 An application of legislation votes, based on .CSV files.
-
-  
 
 ## Pre-requisites
 
-  
 Node Installed
-
-
 To install:
 
 https://nodejs.org/en/download
 
-### Run code
-
 
 ## Getting Started
 
-  
-
 Install depencies
-
-  
 
 `npm install`
 
-  
-
-  
-
 And the, run the development server:
 
-  
-
 `npm run dev`
-
-  
 
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
